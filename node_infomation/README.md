@@ -19,6 +19,8 @@
 
 ### discription
 
+`TrigonometricRatio`
+
 ```java
 public static class TrigonometricRatio{
     // attribute
@@ -35,6 +37,8 @@ public static class TrigonometricRatio{
 
 * あるthetaに対しての三角比を定義しておくためのクラス
 
+`TrigonometricFunction`
+
 ```java
 public static class TrigonometricFunction{
     // method
@@ -47,6 +51,8 @@ public static class TrigonometricFunction{
 
 * 座標計算時の三角比に関わる計算をするときに利用するクラス
 
+`LinePointFunction`
+
 ```java
 public static class LinePointFunction{
     // method
@@ -55,6 +61,8 @@ public static class LinePointFunction{
 ```
 
 * 点同士の距離を計算するときに使用するクラス
+
+`Coodinate`
 
 ```java
 public static class Coodinate{

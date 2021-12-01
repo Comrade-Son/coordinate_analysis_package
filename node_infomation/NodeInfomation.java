@@ -3,7 +3,7 @@ package node_infomation;
 import java.util.ArrayList;
 import java.lang.Math;
 
-public class NodeInfomation {
+public class NodeInfomation{
     public static class TrigonometricRatio{
         public double cos;
         public double sin;
