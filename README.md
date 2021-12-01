@@ -1,10 +1,10 @@
 # spresense_coodinate
 
-## `coodinate.Client`
+## `wave_information`
 
 coming soon ...
 
-## `coodinate.Spresense`
+## `node_information.NodeInfomation`
 
 Spresense 同士の絶対距離を計測するのに用いる。
 
@@ -86,14 +86,9 @@ public static class CalcCoodinate{
 
 * `NodeSets` クラスと `NodeToNodeSets` クラスをもとに、各Spresenseの絶対位置をupdateするためのクラス
 
-## `wave.Wave`
-
-coming soon ...
-
 ### スプレセンス - スプレセンス => スマホ
 
 * 3つの波形情報 × 2種類　=> 距離に変換
-
 
 ### スプレセンス - スマホ => スマホ
 
@@ -104,7 +99,6 @@ coming soon ...
 * 4種類の誤差入り情報 => 重心を求める
 
 * 重心を返す(これが)
-
 
 (スプレセンスとスマホ)
 
