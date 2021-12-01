@@ -16,76 +16,30 @@ public class NodeInfomation {
 
     public static class TrigonometricFunction{
 
-        public static double convertSideToCos(double left_side, double right_side, double opposit_side){
+        protected static double convertSideToCos(double left_side, double right_side, double opposit_side){
             double cos = (Math.pow(left_side, 2) + Math.pow(right_side, 2) - Math.pow(opposit_side, 2)) / (2 * left_side * right_side);
             return cos;
         }
 
-        public static double convertCosToSin(double cos){
+        protected static double convertCosToSin(double cos){
             double sin = Math.sqrt(1 - Math.pow(cos, 2));
             return sin;
         }
 
-        public static TrigonometricRatio sideToTriRatio(double left_side, double right_side, double opposit_side){
+        protected static TrigonometricRatio sideToTriRatio(double left_side, double right_side, double opposit_side){
             double cos = TrigonometricFunction.convertSideToCos(left_side, right_side, opposit_side);
             double sin = TrigonometricFunction.convertCosToSin(cos);
             TrigonometricRatio tri_ratio = new TrigonometricRatio();
             tri_ratio.setValue(cos, sin);
             return tri_ratio;
         }
-
-        public static double sumVecotorAngle(Coodinate host, Coodinate client1, Coodinate client2, Coodinate client3){
-            double theta = 0;
-            double left_side = 0;
-            double right_side = 0;
-            double opposit_side = 0;
-
-            left_side = LinePointFunction.getDistance(host, client1);
-            right_side = LinePointFunction.getDistance(host, client2);
-            opposit_side = LinePointFunction.getDistance(client1, client2);
-            TrigonometricRatio tri_rat1 = new TrigonometricRatio();
-            tri_rat1 = sideToTriRatio(left_side, right_side, opposit_side);
-
-            left_side = LinePointFunction.getDistance(host, client2);
-            right_side = LinePointFunction.getDistance(host, client3);
-            opposit_side = LinePointFunction.getDistance(client2, client3);
-            TrigonometricRatio tri_rat2 = new TrigonometricRatio();
-            tri_rat2 = sideToTriRatio(left_side, right_side, opposit_side);
-
-            left_side = LinePointFunction.getDistance(host, client3);
-            right_side = LinePointFunction.getDistance(host, client1);
-            opposit_side = LinePointFunction.getDistance(client3, client1);
-            TrigonometricRatio tri_rat3 = new TrigonometricRatio();
-            tri_rat3 = sideToTriRatio(left_side, right_side, opposit_side);
-            
-            theta = Math.acos(tri_rat1.cos) + Math.acos(tri_rat2.cos) + Math.acos(tri_rat3.cos);
-            return theta;
-        }
     }
 
     public static class LinePointFunction{
-        private static double getDistance(Coodinate a, Coodinate b) {
+        protected static double getDistance(Coodinate a, Coodinate b) {
             double distance = Math.sqrt(Math.pow((b.x - a.x), 2) + Math.pow((b.y - a.y), 2));
             return distance;
         }
-
-        public static Coodinate getNeighborhood(Coodinate basis, Coodinate comparison1, Coodinate comparison2, double basis_distance){
-            double distance1 = LinePointFunction.getDistance(basis, comparison1);
-            double distance2 = LinePointFunction.getDistance(basis, comparison2);
-            double difference = Math.abs(basis_distance - distance1) - Math.abs(basis_distance - distance2);
-            if (difference < 0){
-                return comparison1;
-            }else{
-                return comparison2;
-            } 
-        }
-
-        // public static Coodinate CenterOfGravity(Coodinate p, Coodinate q){
-        //     Coodinate g = new Coodinate();
-        //     double[] g_array = {(p.x + q.x) / 2.0, (p.y + q.y) / 2.0};
-        //     g.setValue(g_array);
-        //     return g;
-        // }
     }
 
     public static class Coodinate{
@@ -230,20 +184,20 @@ public class NodeInfomation {
 
     public static class CalculateCoodinate{
 
-        private void setFirstNode(NodeSets node_sets){
+        private void setHostNode(NodeSets node_sets){
             int node_index = node_sets.getIndex(0);
             double[] coodinate = {0.0, 0.0};
             node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate);
         }
 
-        private void setSecondNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
+        private void setFirstNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
             int node_index = node_sets.getIndex(1);
             double distance = n2n_sets.getDistance(1, 0);
             double[] coodinate = {distance, 0.0};
             node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate);
         }
 
-        private void setThirdNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
+        private void setSecondNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
             int node_index = node_sets.getIndex(2);
             double distance_1_0 = n2n_sets.getDistance(1, 0);
             double distance_2_0 = n2n_sets.getDistance(2, 0);
@@ -253,7 +207,7 @@ public class NodeInfomation {
             node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate_array);
         }
 
-        private void setHostNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
+        private void setThirdNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
             int node_index = node_sets.getIndex(3);
             double distance_1_0 = n2n_sets.getDistance(1, 0);
             double distance_3_0 = n2n_sets.getDistance(3, 0);
@@ -283,71 +237,10 @@ public class NodeInfomation {
         }
 
         public void setNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
-            this.setFirstNode(node_sets);
+            this.setHostNode(node_sets);
             this.setSecondNode(node_sets, n2n_sets);
             this.setThirdNode(node_sets, n2n_sets);
-            this.setHostNode(node_sets, n2n_sets);
+            this.setFirstNode(node_sets, n2n_sets);
         }
     }
-
-    // public static class CalculateHostCoodinate{
-
-    //     private Coodinate estimateHostCoodinate(NodeToNodeSets n2n_sets, int host_index, int client1_index, int client2_index, Boolean is_abobe){
-    //         double distance_left = n2n_sets.getDistance(host_index, client1_index);
-    //         double distance_right = n2n_sets.getDistance(host_index, client2_index);
-    //         double distance_opposit = n2n_sets.getDistance(client1_index, client2_index);
-    //         TrigonometricRatio tri_ratio = TrigonometricFunction.sideToTriRatio(distance_left, distance_right, distance_opposit);
-
-    //         Coodinate coodinate = new Coodinate();
-    //         if (is_abobe){
-    //             double[] coodinate_array = {distance_left * tri_ratio.cos, distance_left * tri_ratio.sin};
-    //             coodinate.setValue(coodinate_array);
-    //             return coodinate;
-    //         }else{
-    //             double[] coodinate_array = {distance_left * tri_ratio.cos, (-1) * distance_left * tri_ratio.sin};
-    //             coodinate.setValue(coodinate_array);
-    //             return coodinate;
-    //         }
-    //     }
-
-    //     private Coodinate getHostCoodinate(NodeSets node_sets, NodeToNodeSets n2n_sets){
-    //         // 座標をリターンする
-    //         double[] sum_thata = new double[2];
-    //         ArrayList<Coodinate> coodinate = new ArrayList<Coodinate>();
-
-    //         for (int i = 0; i < sum_thata.length; i++){
-    //             Boolean is_abobe = (1 == i);
-    //             Coodinate host_coodinate = estimateHostCoodinate(n2n_sets, 0, i + 1, i + 2, is_abobe);
-    //             sum_thata[i] = TrigonometricFunction.sumVecotorAngle(host_coodinate, node_sets.node_sets.get(node_sets.getIndex(1)).coodinate, node_sets.node_sets.get(node_sets.getIndex(2)).coodinate, node_sets.node_sets.get(node_sets.getIndex(3)).coodinate);
-    //             coodinate.add(host_coodinate);
-    //         }
-
-    //         if (sum_thata[0] >= sum_thata[1]){
-    //             return coodinate.get(0);
-    //         }else{
-    //             return coodinate.get(1);
-    //         }
-    //     }
-
-    //     private void setHostCoodinate(NodeSets node_sets, NodeToNodeSets n2n_sets){
-    //         int host_index = node_sets.getIndex(0);
-    //         Coodinate host_coodinate = new Coodinate();
-    //         host_coodinate = getHostCoodinate(node_sets, n2n_sets);
-    //         node_sets.node_sets.get(host_index).updateCoodinate(host_coodinate);
-    //     }
-
-    //     private void alignHostToOrigin(NodeSets node_sets){
-    //         int host_index = node_sets.getIndex(0);
-    //         Coodinate moved_coodinate = new Coodinate();
-    //         for (int i = 0; i < node_sets.node_sets.size(); i++){
-    //             moved_coodinate = node_sets.deffernceCoodinate(host_index, i);
-    //             node_sets.node_sets.get(i).updateCoodinate(moved_coodinate);
-    //         }
-    //     }
-
-    //     public void determineAllNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
-    //         setHostCoodinate(node_sets, n2n_sets);
-    //         alignHostToOrigin(node_sets);
-    //     }
-    // }
 }

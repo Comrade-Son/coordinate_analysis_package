@@ -3,7 +3,7 @@ package signal_analysis;
 import java.util.ArrayList;
 
 public class SignalAnalysis{
-    public static class Complex{
+    private static class Complex{
         public double real;
         public double imag;
 
@@ -72,7 +72,7 @@ public class SignalAnalysis{
             }
         }
 
-        public double getFrequencyAbs(int detect_index){
+        protected double getFrequencyAbs(int detect_index){
             double frequency_abs = 0;
             frequency_abs = Math.sqrt(Math.pow(this.dft_array.get(detect_index).real, 2) + Math.pow(this.dft_array.get(detect_index).imag, 2));
             return frequency_abs;

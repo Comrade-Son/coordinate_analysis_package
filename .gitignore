@@ -1,3 +1,5 @@
 *.class
 *.txt
 *.DS_Store
+SampleDFTPlot.java
+SamplePlot.java
