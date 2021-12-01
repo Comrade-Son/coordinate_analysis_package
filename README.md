@@ -15,3 +15,19 @@
 `signal_analysis`
 
 * 信号データから距離を推定する
+
+## result of sample-code
+
+### value of coodinate
+
+![image](https://user-images.githubusercontent.com/57125746/144279231-6e3ad965-b29b-47dc-89a1-8e6cab979af4.png)
+
+### plot
+
+|青色|赤色|
+|--|--|
+|実測値|推定値|
+
+![image (2)](https://user-images.githubusercontent.com/57125746/144277854-7307b263-1af4-410e-9f89-d4582ed69f2c.png)
+
+plot: https://www.geogebra.org/graphing?lang=ja

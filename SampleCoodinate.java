@@ -92,8 +92,11 @@ public class SampleCoodinate {
         calculate_coodinate.setNode(node_sets, n2n_sets);
 
         for (int i = 0; i < node_sets.node_sets.size(); i++){
-            System.out.println(node_sets.node_sets.get(i).device_id + ":" + String.valueOf(node_sets.node_sets.get(i).coodinate.x));
-            System.out.println(node_sets.node_sets.get(i).device_id + ":" + String.valueOf(node_sets.node_sets.get(i).coodinate.y));
+            if (i == 0){
+                System.out.println("host(phone): {" + String.valueOf(node_sets.node_sets.get(i).coodinate.x) + ", " + String.valueOf(node_sets.node_sets.get(i).coodinate.y) + "}");
+            }else{
+                System.out.println("client(spresense)" + node_sets.node_sets.get(i).device_id + ": {" + String.valueOf(node_sets.node_sets.get(i).coodinate.x) + ", " + String.valueOf(node_sets.node_sets.get(i).coodinate.y) + "}");
+            }
         }
     }
 }
