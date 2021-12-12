@@ -36,45 +36,45 @@ public class NodeInfomation{
     }
 
     public static class LinePointFunction{
-        protected static double getDistance(Coodinate a, Coodinate b) {
+        protected static double getDistance(Coordinate a, Coordinate b) {
             double distance = Math.sqrt(Math.pow((b.x - a.x), 2) + Math.pow((b.y - a.y), 2));
             return distance;
         }
     }
 
-    public static class Coodinate{
+    public static class Coordinate{
         public double x;
         public double y;
 
-        public void setValue(double[] coodinate_array){
-            this.x = coodinate_array[0];
-            this.y = coodinate_array[1];
+        public void setValue(double[] coordinate_array){
+            this.x = coordinate_array[0];
+            this.y = coordinate_array[1];
         }
     }
 
     public static class Node{
         public String device_id;
         public int device_index;
-        public Coodinate coodinate;
+        public Coordinate coordinate;
 
         public void setValue(String device_id, int device_index){
-            Coodinate coodinate =  new Coodinate();
-            double[] coodinate_array = new double[2];
-            coodinate.setValue(coodinate_array);
+            Coordinate coordinate =  new Coordinate();
+            double[] coordinate_array = new double[2];
+            coordinate.setValue(coordinate_array);
 
             this.device_id = device_id;
             this.device_index = device_index;
-            this.coodinate = coodinate;
+            this.coordinate = coordinate;
         }
 
-        public void updateCoodinate(Coodinate coodinate){
-            this.coodinate = coodinate;
+        public void updateCoordinate(Coordinate coordinate){
+            this.coordinate = coordinate;
         }
 
-        public void updateDoubleArrayToCoodinate(double[] coodinate_array){
-            Coodinate coodinate =  new Coodinate();
-            coodinate.setValue(coodinate_array);
-            this.coodinate = coodinate;
+        public void updateDoubleArrayToCoordinate(double[] coordinate_array){
+            Coordinate coordinate =  new Coordinate();
+            coordinate.setValue(coordinate_array);
+            this.coordinate = coordinate;
         }
     }
 
@@ -120,17 +120,17 @@ public class NodeInfomation{
             return -1;
         }
 
-        public Coodinate deffernceCoodinate(int origin_index, int moved_index){
+        public Coordinate deffernceCoordinate(int origin_index, int moved_index){
             int origin_in_array_index = this.getIndex(origin_index);
             int moved_in_array_index = this.getIndex(moved_index);
 
-            Coodinate origin_coodinate = this.node_sets.get(origin_in_array_index).coodinate;
-            Coodinate moved_coodinate = this.node_sets.get(moved_in_array_index).coodinate;
+            Coordinate origin_coordinate = this.node_sets.get(origin_in_array_index).coordinate;
+            Coordinate moved_coordinate = this.node_sets.get(moved_in_array_index).coordinate;
 
-            moved_coodinate.x -= origin_coodinate.x;
-            moved_coodinate.y -= origin_coodinate.y;
+            moved_coordinate.x -= origin_coordinate.x;
+            moved_coordinate.y -= origin_coordinate.y;
 
-            return moved_coodinate;
+            return moved_coordinate;
         }
     }
 
@@ -182,19 +182,19 @@ public class NodeInfomation{
         }
     }
 
-    public static class CalculateCoodinate{
+    public static class CalculateCoordinate{
 
         private void setHostNode(NodeSets node_sets){
             int node_index = node_sets.getIndex(0);
-            double[] coodinate = {0.0, 0.0};
-            node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate);
+            double[] coordinate = {0.0, 0.0};
+            node_sets.node_sets.get(node_index).updateDoubleArrayToCoordinate(coordinate);
         }
 
         private void setFirstNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
             int node_index = node_sets.getIndex(1);
             double distance = n2n_sets.getDistance(1, 0);
-            double[] coodinate = {distance, 0.0};
-            node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate);
+            double[] coordinate = {distance, 0.0};
+            node_sets.node_sets.get(node_index).updateDoubleArrayToCoordinate(coordinate);
         }
 
         private void setSecondNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
@@ -203,8 +203,8 @@ public class NodeInfomation{
             double distance_2_0 = n2n_sets.getDistance(2, 0);
             double distance_1_2 = n2n_sets.getDistance(1, 2);
             TrigonometricRatio tri_ratio = TrigonometricFunction.sideToTriRatio(distance_1_0, distance_2_0, distance_1_2);
-            double[] coodinate_array = {distance_2_0 * tri_ratio.cos, distance_2_0 * tri_ratio.sin};
-            node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate_array);
+            double[] coordinate_array = {distance_2_0 * tri_ratio.cos, distance_2_0 * tri_ratio.sin};
+            node_sets.node_sets.get(node_index).updateDoubleArrayToCoordinate(coordinate_array);
         }
 
         private void setThirdNode(NodeSets node_sets, NodeToNodeSets n2n_sets){
@@ -215,24 +215,24 @@ public class NodeInfomation{
             double distance_2_3 = n2n_sets.getDistance(2, 3);
             TrigonometricRatio tri_ratio = TrigonometricFunction.sideToTriRatio(distance_1_0, distance_3_0, distance_1_3);
 
-            double[][] coodinate_array = {
+            double[][] coordinate_array = {
                 {distance_3_0 * tri_ratio.cos, distance_3_0 * tri_ratio.sin},
                 {distance_3_0 * tri_ratio.cos, (-1) * distance_3_0 * tri_ratio.sin},
             };
 
-            Coodinate coodinate3_up = new Coodinate();
-            Coodinate coodinate3_down = new Coodinate();
+            Coordinate coordinate3_up = new Coordinate();
+            Coordinate coordinate3_down = new Coordinate();
 
-            coodinate3_up.setValue(coodinate_array[0]);
-            coodinate3_down.setValue(coodinate_array[1]);
+            coordinate3_up.setValue(coordinate_array[0]);
+            coordinate3_down.setValue(coordinate_array[1]);
 
-            double comparison_up = LinePointFunction.getDistance(node_sets.node_sets.get(node_sets.getIndex(2)).coodinate, coodinate3_up);
-            double comparison_down = LinePointFunction.getDistance(node_sets.node_sets.get(node_sets.getIndex(2)).coodinate, coodinate3_down);
+            double comparison_up = LinePointFunction.getDistance(node_sets.node_sets.get(node_sets.getIndex(2)).coordinate, coordinate3_up);
+            double comparison_down = LinePointFunction.getDistance(node_sets.node_sets.get(node_sets.getIndex(2)).coordinate, coordinate3_down);
 
             if (Math.abs(distance_2_3 - comparison_up) <= Math.abs(distance_2_3 - comparison_down)){
-                node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate_array[0]);
+                node_sets.node_sets.get(node_index).updateDoubleArrayToCoordinate(coordinate_array[0]);
             }else{
-                node_sets.node_sets.get(node_index).updateDoubleArrayToCoodinate(coodinate_array[1]);
+                node_sets.node_sets.get(node_index).updateDoubleArrayToCoordinate(coordinate_array[1]);
             }   
         }
 

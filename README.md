@@ -1,4 +1,4 @@
-# coodinate_analysis_package
+# coordinate_analysis_package
 
 ## abstruct
 
@@ -18,7 +18,7 @@
 
 ## result of sample-code
 
-### value of coodinate
+### value of coordinate
 
 ![image](https://user-images.githubusercontent.com/57125746/144279231-6e3ad965-b29b-47dc-89a1-8e6cab979af4.png)
 

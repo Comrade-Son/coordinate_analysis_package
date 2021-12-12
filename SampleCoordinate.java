@@ -2,25 +2,25 @@ import node_infomation.NodeInfomation.Node;
 import node_infomation.NodeInfomation.NodeSets;
 import node_infomation.NodeInfomation.NodeToNode;
 import node_infomation.NodeInfomation.NodeToNodeSets;
-import node_infomation.NodeInfomation.CalculateCoodinate;
+import node_infomation.NodeInfomation.CalculateCoordinate;
 import signal_analysis.SignalAnalysis.InputSignalInfo;
 import signal_analysis.InterfaceDistance;
 
-public class SampleCoodinate {
+public class SampleCoordinate {
     public static void main(String[] args) {
 
         // infomation: client to client
         NodeSets node_sets = new NodeSets();
         NodeToNodeSets n2n_sets = new NodeToNodeSets();
         InputSignalInfo signal_info = new InputSignalInfo();
-        int sampling_freqency = 96000;
+        int sampling_freqency = 48000;
         int detect_freqency = 15000;
-        int n = 9600;
+        int n = 3000;
         int fourier_section = 30;
 
         String[] device_id = {"0", "1", "2", "3"};
         int[] device_index = {0, 1, 2, 3};
-        double[][] coodinate = {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
+        double[][] coordinate = {{0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}};
 
         // host -> client は行わない
         int[] from = {1, 1, 1, 2, 2, 2, 3, 3, 3};
@@ -51,10 +51,10 @@ public class SampleCoodinate {
         for (int i = 0; i < 12; i++){
             for (int j = 0; j < n; j++){
                 t[j] = (double)j * signal_info.sampling_timing;
-                if ((i < 6) && (j <= 556)){
+                if ((i < 6) && (j <= 278)){
                     degree = 2 * 180 * noise_frequency * t[j];
                     signal[i][j] = Math.sin(Math.toRadians(degree));
-                }else if ((i >= 6) && (j <= 321)){
+                }else if ((i >= 6) && (j <= 161)){
                     degree = 2 * 180 * noise_frequency * t[j];
                     signal[i][j] = Math.sin(Math.toRadians(degree));
                 }else{
@@ -65,7 +65,7 @@ public class SampleCoodinate {
         }
 
         // NodeSets initializes
-        for (int i = 0; i < coodinate.length; i++){
+        for (int i = 0; i < coordinate.length; i++){
             Node node = new Node();
             node.setValue(device_id[i], device_index[i]);
             node_sets.setValue(node);
@@ -87,15 +87,15 @@ public class SampleCoodinate {
             n2n_sets.updateDistance(from_to_array[i][0], from_to_array[i][1], distance[i]);
         }
 
-        CalculateCoodinate calculate_coodinate = new CalculateCoodinate();
+        CalculateCoordinate calculate_coordinate = new CalculateCoordinate();
          
-        calculate_coodinate.setNode(node_sets, n2n_sets);
+        calculate_coordinate.setNode(node_sets, n2n_sets);
 
         for (int i = 0; i < node_sets.node_sets.size(); i++){
             if (i == 0){
-                System.out.println("host(phone): {" + String.valueOf(node_sets.node_sets.get(i).coodinate.x) + ", " + String.valueOf(node_sets.node_sets.get(i).coodinate.y) + "}");
+                System.out.println("host(phone): {" + String.valueOf(node_sets.node_sets.get(i).coordinate.x) + ", " + String.valueOf(node_sets.node_sets.get(i).coordinate.y) + "}");
             }else{
-                System.out.println("client(spresense)" + node_sets.node_sets.get(i).device_id + ": {" + String.valueOf(node_sets.node_sets.get(i).coodinate.x) + ", " + String.valueOf(node_sets.node_sets.get(i).coodinate.y) + "}");
+                System.out.println("client(spresense)" + node_sets.node_sets.get(i).device_id + ": {" + String.valueOf(node_sets.node_sets.get(i).coordinate.x) + ", " + String.valueOf(node_sets.node_sets.get(i).coordinate.y) + "}");
             }
         }
     }
